@@ -4,6 +4,7 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -43,8 +44,25 @@ public class LoginFilter extends ZuulFilter {
 
     @Override
     public Object run() throws ZuulException {
-        HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
+        RequestContext requestContext= RequestContext.getCurrentContext();
+        HttpServletRequest request = requestContext.getRequest();
         System.out.println("拦截了--"+request.getRequestURI());
+        String tokenStr = "token";
+
+        //进行逻辑处理
+        String token = request.getHeader(tokenStr);
+        if(StringUtils.isEmpty(token)){
+             token = request.getParameter(tokenStr);
+        }
+
+        //根据token 进行登录校验逻辑的处理，根据公司的情况来自定义 JWT
+
+        if(StringUtils.isEmpty(token)){
+            requestContext.setSendZuulResponse(false);
+            requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+        }
+
+
         return null;
     }
 }
