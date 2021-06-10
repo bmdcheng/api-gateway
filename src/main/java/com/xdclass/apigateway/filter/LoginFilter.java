@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2021/6/7 0:20
  */
 
-@Component
+//@Component
 public class LoginFilter extends ZuulFilter {
 
     @Override
