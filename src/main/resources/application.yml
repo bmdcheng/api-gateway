@@ -20,3 +20,5 @@ zuul:
     product-service: /apigateway-product/**
     #环境隔离配置：不想让默认的服务对外暴露接口
   ignored-patterns: /*-service/**
+  sensitive-headers:
+#让zuul不去拦截cookie

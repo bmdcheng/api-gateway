@@ -34,10 +34,10 @@ public class LoginFilter extends ZuulFilter {
         HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
         String uri = request.getRequestURI();
         System.out.println("uri--:::"+uri);
-
-        if(!StringUtils.isEmpty(uri) && uri.toLowerCase().contains("order")){
+        //不进行拦截
+       /* if(!StringUtils.isEmpty(uri) && uri.toLowerCase().contains("order")){
             return true;
-        }
+        }*/
 
         return false;
     }
@@ -48,12 +48,23 @@ public class LoginFilter extends ZuulFilter {
         HttpServletRequest request = requestContext.getRequest();
         System.out.println("拦截了--"+request.getRequestURI());
         String tokenStr = "token";
+        String cookieStr = "cookie";
 
         //进行逻辑处理
         String token = request.getHeader(tokenStr);
+        System.out.println("token --"+token);
         if(StringUtils.isEmpty(token)){
              token = request.getParameter(tokenStr);
         }
+        System.out.println("token --"+token);
+
+        //进行cookie的获取
+        String cookie = request.getHeader(cookieStr);
+        System.out.println("cookie1 is "+cookie);
+        if(StringUtils.isEmpty(cookie)){
+            cookie = request.getParameter(cookieStr);
+        }
+        System.out.println("cookie2 is "+cookie);
 
         //根据token 进行登录校验逻辑的处理，根据公司的情况来自定义 JWT
 

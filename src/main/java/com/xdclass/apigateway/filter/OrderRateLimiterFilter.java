@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author chengcheng123
  * @date 2021/6/9 0:35
  */
+//@Component
 public class OrderRateLimiterFilter extends ZuulFilter {
 
 
